@@ -1,17 +1,19 @@
 import { useEffect, useState } from 'react';
 import { FaDiscord, FaGithub, FaInstagram, FaTwitch, FaXTwitter } from 'react-icons/fa6';
+import { SocialLink } from './SocialLink';
 
 interface SocialIcon {
   icon: JSX.Element;
   url: string;
+  color: string;
 }
 
 const socialIcons: SocialIcon[] = [
-  { icon: <FaDiscord />, url: 'https://discord.com/invite/ke48ZgXcdU' },
-  { icon: <FaTwitch />, url: 'https://www.twitch.tv/afor_digital' },
-  { icon: <FaInstagram />, url: 'https://www.instagram.com/afor_digital' },
-  { icon: <FaGithub />, url: 'https://github.com/Afordin' },
-  { icon: <FaXTwitter />, url: 'https://twitter.com/afor_digital' }
+  { icon: <FaDiscord />, url: 'https://discord.com/invite/ke48ZgXcdU', color: '#7289da' },
+  { icon: <FaTwitch />, url: 'https://www.twitch.tv/afor_digital', color: '#6441a5' },
+  { icon: <FaInstagram />, url: 'https://www.instagram.com/afor_digital', color: '#E1306C' },
+  { icon: <FaGithub />, url: 'https://github.com/Afordin', color: '#24292e' },
+  { icon: <FaXTwitter />, url: 'https://twitter.com/afor_digital', color: '#00acee' }
 ];
 
 interface Contributor {
@@ -21,7 +23,6 @@ interface Contributor {
 
 export const Footer = () => {
   const [contributors, setContributors] = useState<Contributor[]>([]);
-
   useEffect(() => {
     fetch('https://api.github.com/repos/Afordin/hackafor-2/contributors')
       .then((response) => response.json())
@@ -47,9 +48,7 @@ export const Footer = () => {
             <label className="text-sm text-start">Más información del evento</label>
             <div className="flex space-x-5 text-2xl">
               {socialIcons.map((socialIcon, index) => (
-                <a key={index} href={socialIcon.url} className="hover:text-gray-500" target="_blank" rel="noopener noreferrer">
-                  {socialIcon.icon}
-                </a>
+                <SocialLink key={index} icon={socialIcon.icon} hoverColor={socialIcon.color} url={socialIcon.url} />
               ))}
             </div>
           </div>
